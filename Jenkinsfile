@@ -3,28 +3,27 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building'
-                sh 'chmod +x scripts/Linux-Build.sh'
-                sh 'scripts/Linux-Build.sh'
-                archiveArtifacts artifacts: 'bin/Debug/*'
-                echo 'Build successful'
+                withMaven(maven : 'maven_3_5_0') {
+                    echo 'Building'
+                    sh 'mvn clean complete'
+                    echo 'Build successful'
+                }
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing'
-                sh 'echo "Running..."'
-                sh 'chmod +x scripts/Linux-Run.sh'
-                sh 'scripts/Linux-Run.sh'
-                echo 'Testing successful'
+                withMaven(maven : 'maven_3_5_0') {
+                    echo 'Testing'
+                    sh 'mvn test'
+                }
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying'
-                sh 'chmod +x scripts/Linux-Deploy.sh'
-                sh 'scripts/Linux-Deploy.sh'
-                echo 'Deployment successful'
+                withMaven(maven : 'maven_3_5_0') {
+                    echo 'Deploying'
+                    sh 'mvn deploy'
+                }
             }
         }
     }
