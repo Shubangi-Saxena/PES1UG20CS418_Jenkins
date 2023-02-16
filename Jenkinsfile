@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo 'Deploying'
                 sh 'chmod +x scripts/Linux-Deploy.sh'
-                sh 'scripts/Linux-Deploy.sh''
+                sh 'scripts/Linux-Deploy.sh'
                 echo 'Deployment successful'
             }
         }
